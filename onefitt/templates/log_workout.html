@@ -1,0 +1,128 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Workout</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <style>
+        /* General styling */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #4a90e2, #72c2d3);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+    
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+    
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+    
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+    
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #555;
+        }
+    
+        input, select {
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+    
+        input:focus, select:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+        }
+    
+        button {
+            background: linear-gradient(to right, #4a90e2, #357abf);
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+    
+        button:hover {
+            background: linear-gradient(to right, #357abf, #4a90e2);
+            transform: scale(1.05);
+        }
+    
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+    
+        .form-group:last-child {
+            margin-bottom: 0;
+        }
+    
+        /* Add subtle shadow for form elements */
+        input, select {
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+    
+        input::placeholder {
+            color: #aaa;
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Log Your Workout</h2>
+        <form method="POST" action="{% url 'SaveWorkout' %}">
+            {% csrf_token %}
+            <div class="form-group">
+                <label for="workout_type">Workout Type:</label>
+                <select id="workout_type" name="workout_type" required>
+                    <option value="Cardio">Cardio</option>
+                    <option value="Strength">Strength</option>
+                    <option value="Yoga">Yoga</option>
+                    <option value="Swimming">Swimming</option>
+                    <option value="Cycling">Cycling</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration (minutes):</label>
+                <input type="number" id="duration" name="duration" placeholder="Enter duration in minutes" required>
+            </div>
+            <div class="form-group">
+                <label for="log.calories_burned">Calories Burned:</label>
+                <input type="number" id="calories_burned" name="calories_burned" placeholder="Enter calories burned" required>
+            </div>
+            <button type="submit">Save Workout</button>
+        </form>
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONEFITT - Nutrition Tracking</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .logo-text .slogan {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+        }
+
+        nav ul li {
+            margin-left: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #00bfa5;
+        }
+
+        .nutrition-section {
+            padding: 130px 20px;
+            background: linear-gradient(to bottom, #4a90e2, #72c2d3);
+            color: white;
+        }
+
+        .nutrition-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .nutrition-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .nutrition-description {
+            font-size: 1.2rem;
+            margin-bottom: 40px;
+        }
+
+        .cards {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .card {
+            background: white;
+            color: #333;
+            border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 300px;
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .card img {
+            width: 80px;
+            margin-bottom: 20px;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            display: inline-block;
+            background: #4a90e2;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            padding: 10px 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .button:hover {
+            background: #357abf;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="ONEFITT Logo" class="logo-image">
+            <div class="logo-text">
+                <h1>ONEFITT</h1>
+                <p class="slogan">Your Fitness Journey Starts Here</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'Home' %}">Home</a></li>
+                <li><a href="{% url 'Fitness' %}">Fitness Tracking</a></li>
+                <li><a href="{% url 'Nutrition' %}">Nutrition</a></li>
+                <li><a href="{% url 'Mental' %}">Mental Wellness</a></li>
+                <li><a href="{% url 'Analytics' %}">Analytics</a></li>
+                <li><a href="{% url 'Logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="nutrition-section">
+            <div class="nutrition-container">
+                <h1 class="nutrition-title">Track Your Nutrition Goals</h1>
+                <p class="nutrition-description">Log your meals, track your nutritional intake, and monitor your health.</p>
+                <div class="cards">
+                    <div class="card">
+                        <h3>Log Nutrition</h3>
+                        <p>Record your daily meals and track calories, protein, carbs, and fats.</p>
+                        <a href="{% url 'LogNutrition' %}" class="button">Log Now</a>
+                    </div>
+                    <div class="card">
+                        <h3>Nutrition History</h3>
+                        <p>View and analyze your nutrition logs.</p>
+                        <a href="{% url 'NutritionHistory' %}" class="button">View History</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

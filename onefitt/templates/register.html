@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONEFITT - Register</title>
+    <style>
+        /* General Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #f4f4f9;
+            color: #333;
+            line-height: 1.6;
+            font-family: Arial, sans-serif;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px; /* Ensure size consistency */
+            margin-right: 10px;
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .logo-text .slogan {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        nav {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            flex-grow: 1;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li {
+            margin-left: 25px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 5px 10px;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #00bfa5;
+        }
+
+        /* Register Section */
+        .register-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(125vh - 120px); /* Adjust for header height */
+            background: url('{% static "assets/img/walking.jpeg" %}') no-repeat center center/cover;
+            position: relative;
+            z-index: 0;
+        }
+
+        .register-section::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: -1;
+        }
+
+        .register-container {
+            background: #ffffff;
+            color: #333;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            width: 400px;
+        }
+
+        .register-container h2 {
+            margin-bottom: 1.5rem;
+            color: #4a90e2;
+            font-weight: bold;
+            font-size: 1.8rem;
+        }
+
+        .register-form label {
+            display: block;
+            text-align: left;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: #555;
+        }
+
+        .register-form input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+            font-size: 1rem;
+        }
+
+        .register-form input:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 5px rgba(74, 144, 226, 0.5);
+        }
+
+        .btn-register {
+            background-color: #4a90e2;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-register:hover {
+            background-color: #357abf;
+            transform: translateY(-2px);
+        }
+
+        .login-prompt {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .login-prompt a {
+            color: #4a90e2;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .login-prompt a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: #282a33;
+            color: white;
+            text-align: center;
+            padding: 1.5rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="ONEFITT Logo" class="logo-image">
+            <div class="logo-text">
+                <h1>ONEFITT</h1>
+                <p class="slogan">Your Fitness Journey Starts Here</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'Index' %}">Home</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="register-section">
+            <div class="register-container">
+                <h2>Create an Account</h2>
+                <form action="{% url 'Register' %}" method="POST" class="register-form">
+                    {% csrf_token %}
+                    <label for="username">Username:</label>
+                    <input type="text" name="username" id="username" required>
+                    
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" id="email" required>
+                    
+                    <label for="password">Password:</label>
+                    <input type="password" name="password" id="password" required>
+                    
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" name="confirm-password" id="confirm-password" required>
+                    
+                    {% if error %}
+                        <p style="color: red;">{{ error }}</p>
+                    {% endif %}
+                    
+                    <button type="submit" class="btn-register">Register</button>
+                </form>
+                <p class="login-prompt">
+                    Already have an account? <a href="{% url 'Login' %}">Login here</a>.
+                </p>
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2024 ONEFITT. All rights reserved.</p>
+        </div>
+    </footer>
+</body>
+</html>

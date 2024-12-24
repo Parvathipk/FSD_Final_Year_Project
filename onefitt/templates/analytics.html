@@ -1,0 +1,242 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ONEFITT - Analytics</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-image {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .logo-text h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        .logo-text .slogan {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            margin: 0;
+        }
+
+        nav ul li {
+            margin-left: 15px;
+        }
+
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: color 0.3s;
+        }
+
+        nav ul li a:hover {
+            color: #00bfa5;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            color: #00bfa5;
+        }
+
+        .chart-container {
+            margin: 20px auto;
+            padding: 20px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+        }
+
+        .chart-container h2 {
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+            color: #333;
+        }
+
+        canvas {
+            max-width: 80%;
+            height: 300px;
+            margin: 0 auto;
+            padding: 10px;
+            border-radius: 10px;
+        }
+
+        .back-link {
+            display: block;
+            margin: 20px auto 0;
+            text-align: center;
+            font-size: 1rem;
+            color: #00bfa5;
+            text-decoration: none;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            canvas {
+                max-width: 100%;
+            }
+
+            h1 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{% static 'assets/img/logo.jpg' %}" alt="ONEFITT Logo" class="logo-image">
+            <div class="logo-text">
+                <h1>ONEFITT</h1>
+                <p class="slogan">Your Fitness Journey Starts Here</p>
+            </div>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{% url 'Home' %}">Home</a></li>
+                <li><a href="{% url 'Fitness' %}">Fitness Tracking</a></li>
+                <li><a href="{% url 'Nutrition' %}">Nutrition</a></li>
+                <li><a href="{% url 'Mental' %}">Mental Wellness</a></li>
+                <li><a href="{% url 'Analytics' %}">Analytics</a></li>
+                <li><a href="{% url 'Logout' %}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="container">
+        <h1>Your Analytics</h1>
+
+        <div class="chart-container">
+            <h2>Mood Trends</h2>
+            <canvas id="moodChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Workout Progress</h2>
+            <canvas id="workoutChart"></canvas>
+        </div>
+
+        <div class="chart-container">
+            <h2>Nutrition Breakdown</h2>
+            <canvas id="nutritionChart"></canvas>
+        </div>
+
+        <a href="{% url 'Home' %}" class="back-link">Back to Dashboard</a>
+    </div>
+
+    <script>
+        // Mood Trends Chart
+        const moodData = {
+            labels: {{ mood_labels|safe }},
+            datasets: [{
+                label: "Mood Count",
+                data: {{ mood_data|safe }},
+                backgroundColor: ["#4caf50", "#f44336", "#ff9800", "#2196f3"],
+            }]
+        };
+
+        const moodConfig = {
+            type: 'bar',
+            data: moodData,
+            options: { responsive: true }
+        };
+
+        new Chart(document.getElementById("moodChart"), moodConfig);
+
+        // Workout Progress Chart
+        const workoutData = {
+            labels: {{ workout_labels|safe }},
+            datasets: [{
+                label: "Calories Burned",
+                data: {{ workout_data|safe }},
+                backgroundColor: "#00bfa5"
+            }]
+        };
+
+        const workoutConfig = {
+            type: 'line',
+            data: workoutData,
+            options: { responsive: true }
+        };
+
+        new Chart(document.getElementById("workoutChart"), workoutConfig);
+
+        // Nutrition Breakdown Chart
+        const nutritionData = {
+            labels: {{ nutrition_labels|safe }},
+            datasets: [{
+                label: "Nutrients",
+                data: {{ nutrition_data|safe }},
+                backgroundColor: ["#4caf50", "#ffeb3b", "#f44336"]
+            }]
+        };
+
+        const nutritionConfig = {
+            type: 'pie',
+            data: nutritionData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                    }
+                }
+            }
+        };
+
+        new Chart(document.getElementById("nutritionChart"), nutritionConfig);
+
+        console.log("Nutrition Labels:", {{ nutrition_labels|safe }});
+        console.log("Nutrition Data:", {{ nutrition_data|safe }});
+    </script>
+</body>
+</html>

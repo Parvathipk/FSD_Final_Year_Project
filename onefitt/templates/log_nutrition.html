@@ -1,0 +1,111 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Log Nutrition</title>
+    <link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #4a90e2, #72c2d3);
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 80px auto;
+            padding: 30px;
+            background: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #4a90e2;
+            font-weight: bold;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        input, select {
+            padding: 12px 15px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            border-color: #4a90e2;
+            outline: none;
+            box-shadow: 0 0 8px rgba(74, 144, 226, 0.4);
+        }
+
+        button {
+            background: linear-gradient(to right, #4a90e2, #357abf);
+            color: white;
+            font-size: 1.2rem;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.2s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #357abf, #4a90e2);
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Log Your Nutrition</h2>
+        <form method="POST" action="{% url 'SaveNutrition' %}">
+            {% csrf_token %}
+            <label for="meal_type">Meal Type:</label>
+            <select id="meal_type" name="meal_type" required>
+                <option value="Breakfast">Breakfast</option>
+                <option value="Lunch">Lunch</option>
+                <option value="Dinner">Dinner</option>
+                <option value="Snack">Snack</option>
+            </select>
+
+            <label for="food_item">Food Item:</label>
+            <input type="text" id="food_item" name="food_item" placeholder="Enter food item" required>
+
+            <label for="calories">Calories:</label>
+            <input type="number" id="calories" name="calories" placeholder="Enter calories" required>
+
+            <label for="protein">Protein (g):</label>
+            <input type="number" id="protein" name="protein" placeholder="Enter protein" required>
+
+            <label for="carbs">Carbs (g):</label>
+            <input type="number" id="carbs" name="carbs" placeholder="Enter carbs" required>
+
+            <label for="fats">Fats (g):</label>
+            <input type="number" id="fats" name="fats" placeholder="Enter fats" required>
+
+            <button type="submit">Save Nutrition</button>
+        </form>
+    </div>
+</body>
+</html>
